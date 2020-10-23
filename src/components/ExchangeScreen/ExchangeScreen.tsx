@@ -2,6 +2,8 @@ import React from 'react';
 import { Currency } from '../../typings/currency';
 import { CurrencyInput } from '../CurrencyInput/CurrencyInput';
 
+import './ExchangeScreen.css'
+
 export interface ExchangeScreenStateProps {
     fromBalance: number;
     toBalance: number
@@ -39,12 +41,15 @@ export class ExchangeScreen extends React.Component<ExchangeScreenProps> {
                 <CurrencyInput
                     currency={fromCurrency}
                     balance={fromBalance}
+                    tabIndex={1}
+                    autoFocus
                 />
             </div>
             <div className={this.blockName + '__to'}>
                 <CurrencyInput
                     currency={toCurrency}
                     balance={toBalance}
+                    tabIndex={2}
                 />
             </div>
         </div>

@@ -1,0 +1,16 @@
+.exchange-screen__from,
+.exchange-screen__to {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 160px;
+    padding: 20px
+}
+
+.exchange-screen__from {
+    background: linear-gradient(180deg, rgba(0,0,255,0.75) 0%,  rgba(0,0,255,0.50) 100%);
+}
+
+.exchange-screen__to {
+    background: linear-gradient(180deg, rgba(0,0,255,0.85) 0%,  rgba(0,0,255,0.60) 100%);
+}

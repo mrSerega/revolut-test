@@ -1,0 +1,27 @@
+.text-input {
+    position: relative;
+}
+
+.text-input__input {
+    z-index: 1;
+    position: relative;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: #ffffff;
+    font-size: 32px;
+    width: 100%;
+    text-align: right;
+}
+
+.text-input__placeholder {
+    z-index: 0;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    text-align: right;
+    font-size: 32px;
+    color: rgba(255,255,255,0.5)
+}
