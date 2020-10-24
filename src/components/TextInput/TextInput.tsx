@@ -8,6 +8,7 @@ export interface TextInputProps {
     tabIndex?: number
     autoFocus?: boolean;
     placeholder?: string
+    isFrom?: boolean
 }
 
 export class TextInput extends React.Component<TextInputProps> {
@@ -19,10 +20,17 @@ export class TextInput extends React.Component<TextInputProps> {
             value,
             tabIndex,
             autoFocus = false,
-            placeholder
+            placeholder,
+            isFrom
         } = this.props
 
         return <div className={this.blockName}>
+            {isFrom && <div className={
+                this.blockName + '__view' + ' ' +
+                this.blockName + '__view' + (!value ? '_empty' : '')
+            }>
+                {value}
+            </div>}
             <input
                 autoFocus={autoFocus}
                 tabIndex={tabIndex}

@@ -9,21 +9,15 @@ export interface CurrencyInputProps {
     balance: number,
     tabIndex?: number
     autoFocus?: boolean
-}
-
-export interface CurrencyInputState {
+    isFrom?: boolean
     value: string
+    onChange: (value: string) => void
+    subtitle?: string
+    error?: string
 }
 
-export class CurrencyInput extends React.Component<
-    CurrencyInputProps,
-    CurrencyInputState
-> {
+export class CurrencyInput extends React.Component<CurrencyInputProps> {
     readonly blockName = 'currency-input'
-
-    state: CurrencyInputState = {
-        value: ''
-    }
 
     render() {
 
@@ -31,12 +25,12 @@ export class CurrencyInput extends React.Component<
             currency,
             balance,
             tabIndex,
-            autoFocus = false
+            autoFocus = false,
+            isFrom = false,
+            value,
+            subtitle,
+            error
         } = this.props
-
-        const {
-            value
-        } = this.state
 
         return <div className={this.blockName}>
             <div className={this.blockName + '__top'}>
@@ -49,20 +43,28 @@ export class CurrencyInput extends React.Component<
                     tabIndex={tabIndex}
                     autoFocus={autoFocus}
                     placeholder="00.00"
+                    isFrom={isFrom}
                 />
             </div>
             <div className={this.blockName + '__bottom'}>
                 <div className={this.blockName + '__balance'}>
                     You have {CurrencySymbolMapper[currency]}{balance}
                 </div>
-                <div className={this.blockName + '__rate'}>
+                <div className={
+                    this.blockName + '__subtitle' + ' ' +
+                    this.blockName + '__subtitle' + (error ? '_error' : '')
+                }>
+                    {error || subtitle}
                 </div>
             </div>
         </div>
     }
 
     private handleChangeValue = (value: string) => {
-        console.log('setSate', value)
-        this.setState({value})
+        const {
+            onChange
+        } = this.props
+
+        onChange && onChange(value)
     }
 }

@@ -9,10 +9,10 @@ export interface UpdatePocketAction {
     type: typeof UPDATE_POCKET,
     payload: UpdatePocketPayload
 }
-export function updatePocket(params: UpdatePocketPayload): UpdatePocketAction {
+export function updatePocket(payload: UpdatePocketPayload): UpdatePocketAction {
     return {
         type: UPDATE_POCKET,
-        payload: params
+        payload
     }
 }
 

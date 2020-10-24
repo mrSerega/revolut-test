@@ -1,17 +1,35 @@
 .text-input {
     position: relative;
+    display: flex;
+    justify-content: flex-end;
 }
 
+.text-input__view,
 .text-input__input {
-    z-index: 1;
-    position: relative;
     background-color: transparent;
     outline: none;
     border: none;
-    color: #ffffff;
+    color: transparent;
     font-size: 32px;
     width: 100%;
     text-align: right;
+}
+
+.text-input__input {
+    color: white;
+    z-index: 1;
+    position: relative;
+}
+
+.text-input__view {
+    position: absolute;
+    color: transparent;
+    z-index: 0;
+}
+
+.text-input__view:not(.text-input__view_empty)::before {
+    content: "-";
+    color: #ffffff;
 }
 
 .text-input__placeholder {
@@ -23,5 +41,5 @@
     left: 0;
     text-align: right;
     font-size: 32px;
-    color: rgba(255,255,255,0.5)
+    color: rgba(255,255,255,0.25)
 }

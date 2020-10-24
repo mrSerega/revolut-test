@@ -1,7 +1,7 @@
 export enum Currency {
-    GBP,
-    USD,
-    EUR
+    GBP = 'GBP',
+    USD = 'USD',
+    EUR = 'EUR'
 }
 
 export const CurrencySymbolMapper: Record<Currency, string> = {

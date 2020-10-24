@@ -7,7 +7,10 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { rootReducer } from './reducers/indexReducer';
 
-const store = createStore(rootReducer)
+const store = createStore(
+  rootReducer,
+  (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__() // FIXME:
+)
 
 ReactDOM.render(
   <React.StrictMode>

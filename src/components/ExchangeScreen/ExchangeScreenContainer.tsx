@@ -3,6 +3,8 @@ import { ExchangeScreen, ExchangeScreenStateProps, ExchangeScreenDispatchProps, 
 import { RootState } from '../../states/indexState';
 import { Dispatch } from 'redux';
 import { PocketSelector } from '../../states/pocketsState';
+import { sendExchange } from '../../actions/exchangeActions';
+import { ExchangeSelector } from '../../states/exchangeState';
 
 const mapStateToProps = (state: RootState, ownProps: ExchangeScreenOwnProps): ExchangeScreenStateProps => {
     const {
@@ -22,13 +24,26 @@ const mapStateToProps = (state: RootState, ownProps: ExchangeScreenOwnProps): Ex
         throw new Error(`there are no ${toCurrency} pocket`)
     }
 
+    const exchangeRate = ExchangeSelector.getRate(state)
+
+    if (exchangeRate === undefined) {
+        throw new Error(`there are no exchange rate`)
+    }
+
     return {
         fromBalance: fromPocket.balance,
-        toBalance: toPocket.balance
+        toBalance: toPocket.balance,
+        rate: exchangeRate
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch, ownProps: ExchangeScreenOwnProps): ExchangeScreenDispatchProps => ({})
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: ExchangeScreenOwnProps): ExchangeScreenDispatchProps => ({
+    onExchange: (fromValue: number) => dispatch(sendExchange({
+        fromValue,
+        fromCurrency: ownProps.fromCurrency,
+        toCurrency: ownProps.toCurrency
+    }))
+})
 
 export const ExchangeScreenContainer = connect<
     ExchangeScreenStateProps,

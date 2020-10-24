@@ -8,9 +8,33 @@
 }
 
 .exchange-screen__from {
-    background: linear-gradient(180deg, rgba(0,0,255,0.75) 0%,  rgba(0,0,255,0.50) 100%);
+    z-index: 2;
+    position: relative;
+    background-color: var(--color-dark-blue);
+    box-shadow: 0 8px 8px rgba(0,0,0,0.2);
 }
 
 .exchange-screen__to {
-    background: linear-gradient(180deg, rgba(0,0,255,0.85) 0%,  rgba(0,0,255,0.60) 100%);
+    z-index: 1;
+    position: relative;
+    background-color: var(--color-dark-blue)
 }
+
+.exchange-screen__header {
+    z-index: 3;
+    position: relative;
+    display: flex;
+    background-color: var(--color-dark-blue);
+    justify-content: space-between;
+    padding: 4px;
+}
+
+.exchange-screen__cancel,
+.exchange-screen__exchange {
+    color: var(--color-gray-6);
+}
+
+.exchange-screen__exchange_disabled {
+    color: var(--color-gray-4);
+}
+
