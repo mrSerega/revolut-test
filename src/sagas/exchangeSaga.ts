@@ -1,18 +1,33 @@
-import { SEND_EXCHANGE } from '../actions/exchangeActions';
-import { all, call, takeLatest } from 'redux-saga/effects'
-import { MockServerApi } from '../mock/mockServer';
+import { SendExchangeAction, SEND_EXCHANGE, toggleExchangeLoading } from '../actions/exchangeActions';
+import { all, call, put, takeLatest } from 'redux-saga/effects'
+import { ExchangeResponse, MockServerApi } from '../mock/mockServer';
+import { mockServerApi } from '../store/store';
+import { updatePocket } from '../actions/pocketActions';
 
 
 
-function* sendExchangeHandler(
-//     {
-//     payload
-// }: SendExchangeAction
-) {
+function* sendExchangeHandler({
+    payload
+}: SendExchangeAction) {
     // try { TODO:
-        console.log('SAGA!')
-        const toAmount = yield call(MockServerApi.exchange)
-        console.log(toAmount)
+        const {
+            newFromValue,
+            newToValue
+        }: ExchangeResponse  = yield call(mockServerApi.exchange, payload)
+
+        yield all([
+            put(updatePocket({
+                currency: payload.fromCurrency,
+                value: newFromValue
+            })),
+            put(updatePocket({
+                currency: payload.toCurrency,
+                value: newToValue
+            }))
+        ])
+
+        yield put(toggleExchangeLoading({value: false}))
+
     // } catch (err) {
 
     // }

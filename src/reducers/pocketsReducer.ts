@@ -13,7 +13,7 @@ export function pocketReducer(
                     if (pocket.currency === action.payload.currency) {
                         return {
                             ...pocket,
-                            balance: pocket.balance
+                            balance: action.payload.value
                         }
                     } else {
                         return pocket

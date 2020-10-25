@@ -1,23 +1,29 @@
 import React from 'react';
+import { runInThisContext } from 'vm';
 import { Currency, CurrencySymbolMapper } from '../../typings/currency';
 import { CurrencyInput } from '../CurrencyInput/CurrencyInput';
+import { Spinner } from '../Spinner/Spinner';
 
 import './ExchangeScreen.css'
 
 export interface ExchangeScreenStateProps {
-    fromBalance: number;
-    toBalance: number
-    rate: number
+    rate: number;
+    isExchangeLoading: boolean;
+    pocketList: {
+        currency: Currency,
+        balance: number
+    }[]
 }
 
 export interface ExchangeScreenDispatchProps {
-    onExchange: (fromValue: number) => void;
+    onExchange: (
+        fromValue: number,
+        fromCurrency: Currency,
+        toCurrency: Currency
+    ) => void;
 }
 
-export interface ExchangeScreenOwnProps {
-    fromCurrency: Currency
-    toCurrency: Currency
-}
+export interface ExchangeScreenOwnProps {}
 
 export type ExchangeScreenProps =
     & ExchangeScreenStateProps
@@ -27,6 +33,8 @@ export type ExchangeScreenProps =
 export interface ExchangeScreenState {
     fromValue: string
     toValue: string
+    fromCurrency: Currency
+    toCurrency: Currency
 }
 
 export class ExchangeScreen extends React.Component<
@@ -38,20 +46,22 @@ export class ExchangeScreen extends React.Component<
 
     state: ExchangeScreenState = {
         fromValue: '',
-        toValue:  ''
+        toValue:  '',
+        fromCurrency: Currency.GBP,
+        toCurrency: Currency.USD
     }
 
     render() {
 
         const {
-            fromCurrency,
-            fromBalance,
-            toCurrency,
-            toBalance,
-            rate
+            rate,
+            isExchangeLoading,
+            pocketList,
         } = this.props
 
         const {
+            fromCurrency,
+            toCurrency,
             fromValue,
             toValue
         } = this.state
@@ -74,25 +84,36 @@ export class ExchangeScreen extends React.Component<
             <div className={this.blockName + '__from'}>
                 <CurrencyInput
                     currency={fromCurrency}
-                    balance={fromBalance}
+                    balance={this.getFromBalance()}
                     tabIndex={1}
                     autoFocus
                     isFrom
                     value={fromValue}
                     onChange={this.handleChangeFromValue}
                     error={this.getFromError()}
+                    pocketList={pocketList.map(p => p.currency)} // FIXME:
+                    onLeft={this.handleLeftFrom}
+                    onRight={() => null} // TODO:
                 />
             </div>
             <div className={this.blockName + '__to'}>
                 <CurrencyInput
                     currency={toCurrency}
-                    balance={toBalance}
+                    balance={this.getToBalance()}
                     tabIndex={2}
                     value={toValue}
                     onChange={this.handleChangeToValue}
                     subtitle={this.getToRateString()}
+                    pocketList={pocketList.map(p => p.currency)} // FIXME:
+                    onLeft={() => null}
+                    onRight={() => null}
                 />
             </div>
+            {isExchangeLoading && <div className={this.blockName + '__cover'}>
+                <div className={this.blockName + '__spinner'}>
+                    <Spinner/>
+                </div>
+            </div>}
         </div>
     }
 
@@ -158,36 +179,41 @@ export class ExchangeScreen extends React.Component<
         } = this.props
 
         const {
-            fromValue
+            fromValue,
+            fromCurrency,
+            toCurrency
         } = this.state
 
-        const from = Number.parseFloat(fromValue)
+        const fromV = Number.parseFloat(fromValue)
 
-        !this.isExchangeDisabled() && onExchange(from)
+        !this.isExchangeDisabled() && onExchange(
+            fromV,
+            fromCurrency,
+            toCurrency
+        )
     }
 
     private getToRateString = () => {
         const {
-            toCurrency,
-            fromCurrency,
             rate
         } = this.props
+
+        const {
+            toCurrency,
+            fromCurrency,
+        } = this.state
 
         return `${CurrencySymbolMapper[toCurrency]}1 = ${CurrencySymbolMapper[fromCurrency]}${(1.0/rate).toFixed(2)}`
     }
 
     private getFromError = () => {
         const {
-            fromBalance
-        } = this.props
-
-        const {
             fromValue
         } = this.state
 
         const from = Number.parseFloat(fromValue)
 
-        if (!Number.isNaN(from) && from > fromBalance) {
+        if (!Number.isNaN(from) && from > this.getFromBalance()) {
             return 'insufficient funds'
         }
 
@@ -197,11 +223,70 @@ export class ExchangeScreen extends React.Component<
     private isExchangeDisabled = () => {
 
         const {
-            fromValue
+            fromValue,
         } = this.state
+
+        const {
+            isExchangeLoading
+        } = this.props;
 
         const from = Number.parseFloat(fromValue)
 
-        return !!(this.getFromError() || Number.isNaN(from) || from <= 0)
+        return !!(this.getFromError() || Number.isNaN(from) || from <= 0 || isExchangeLoading)
+    }
+
+    private handleLeftFrom = () => {
+        const {
+            fromCurrency
+        } = this.state
+
+        const {
+            pocketList
+        } = this.props;
+
+        let fromCurrencyIndex = pocketList.findIndex(p => p.currency === fromCurrency) -1
+        if (fromCurrencyIndex < 0) {
+            fromCurrencyIndex = pocketList.length -1
+        }
+
+        this.setState({
+            fromCurrency: pocketList[fromCurrencyIndex].currency
+        })
+    }
+
+    private getFromBalance = () => {
+        const {
+            fromCurrency
+        } = this.state
+
+        const {
+            pocketList
+        } = this.props
+
+        const fromPocket = pocketList.find(p => p.currency === fromCurrency)
+
+        if (!fromPocket) {
+            throw new Error(`there isn't ${fromCurrency} pocket`)
+        }
+
+        return fromPocket.balance
+    }
+
+    private getToBalance = () => {
+        const {
+            toCurrency
+        } = this.state
+
+        const {
+            pocketList
+        } = this.props
+
+        const toPocket = pocketList.find(p => p.currency === toCurrency)
+
+        if (!toPocket) {
+            throw new Error(`there isn't ${toCurrency} pocket`)
+        }
+
+        return toPocket.balance
     }
 }

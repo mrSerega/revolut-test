@@ -1,5 +1,6 @@
 import React from 'react';
 import { Currency, CurrencyNameMapper, CurrencySymbolMapper } from '../../typings/currency';
+import { Arrow } from '../Arrow/Arrow';
 import { TextInput } from '../TextInput/TextInput';
 
 import './CurrencyInput.css'
@@ -13,7 +14,10 @@ export interface CurrencyInputProps {
     value: string
     onChange: (value: string) => void
     subtitle?: string
-    error?: string
+    error?: string,
+    pocketList: Currency[]
+    onLeft: () => void;
+    onRight: () => void;
 }
 
 export class CurrencyInput extends React.Component<CurrencyInputProps> {
@@ -29,7 +33,10 @@ export class CurrencyInput extends React.Component<CurrencyInputProps> {
             isFrom = false,
             value,
             subtitle,
-            error
+            error,
+            pocketList,
+            onLeft,
+            onRight
         } = this.props
 
         return <div className={this.blockName}>
@@ -48,13 +55,36 @@ export class CurrencyInput extends React.Component<CurrencyInputProps> {
             </div>
             <div className={this.blockName + '__bottom'}>
                 <div className={this.blockName + '__balance'}>
-                    You have {CurrencySymbolMapper[currency]}{balance}
+                    You have {CurrencySymbolMapper[currency]}{balance.toFixed(2)}
                 </div>
                 <div className={
                     this.blockName + '__subtitle' + ' ' +
                     this.blockName + '__subtitle' + (error ? '_error' : '')
                 }>
                     {error || subtitle}
+                </div>
+            </div>
+            <div className={this.blockName + '__navigation'}>
+                <div className={this.blockName + '__left'}
+                    onClick={onLeft}
+                >
+                    <Arrow/>
+                </div>
+                <div className={this.blockName + '__pocket-list'}>
+                    {pocketList.map(p => {
+                        return <div
+                            className={
+                                this.blockName + '__pocket-indicator' + ' ' +
+                                this.blockName + '__pocket-indicator'  + (currency === p ? '_active' : '')
+                            }
+                            key={`pocket-indicator-${p}`}
+                        />
+                    })}
+                </div>
+                <div className={this.blockName + '__right'}
+                    onClick={onRight}
+                >
+                    <Arrow/>
                 </div>
             </div>
         </div>

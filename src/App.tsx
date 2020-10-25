@@ -7,10 +7,7 @@ import { Currency } from './typings/currency';
 
 function App() {
   return (
-    <ExchangeScreenContainer
-      fromCurrency={Currency.GBP}
-      toCurrency={Currency.USD}
-    />
+    <ExchangeScreenContainer/>
   );
 }
 
