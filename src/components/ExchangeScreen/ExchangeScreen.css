@@ -55,3 +55,7 @@
     height: 400px;
     z-index: 100;
 }
+
+.exchange-screen__rate {
+    color: var(--color-gray-6)
+}

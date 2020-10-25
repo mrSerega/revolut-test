@@ -2,6 +2,8 @@ import React from 'react'
 import { Spinner } from '../Spinner/Spinner';
 import { ExchangeScreenContainer } from './ExchangeScreenContainer';
 
+import './ExchnageScreenDataSource.css'
+
 export interface ExchangeScreenDataSourceStateProps {
     rates: {
         [index: string]: {
@@ -45,18 +47,22 @@ export class ExchangeScreenDataSource extends React.Component<ExchangeScreenData
         if (isRatesLading && !rates || !isRatesInitialized) {
             console.log('loading')
             return <div className={this.blockName + '__loading-plug'}>
-                <Spinner/>
+                <div className={this.blockName + '__spinner'}>
+                    <Spinner/>
+                </div>
             </div>
         }
 
         if (!isRatesLading && !rates) {
-            console.log('error')
             return <div className={this.blockName + '__error-plug'}>
-                Can't load exchange rates
+                <div className={this.blockName + '__error-text'}>
+                    ERROR<br/><br/>
+                    Can't load exchange rates.<br/><br/>
+                    Please reload page.
+                </div>
             </div>
         }
 
-        console.log('norm,')
         return <ExchangeScreenContainer/>
     }
 }

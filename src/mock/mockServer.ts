@@ -108,7 +108,7 @@ export class MockServerApi<S, StateExt, A extends Action, Ext> {
                 if (response.ok) {
                     const json: RateResponse = await response.json()
                     res({
-                        [base]: json.rates
+                        [base]: {...json.rates, [base]: 1.0}
                     })
                 } else {
                     rej(new Error(`MockServer. Unsuccessful answer: ${response} for request: ${url}`))

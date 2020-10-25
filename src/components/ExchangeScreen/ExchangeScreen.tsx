@@ -74,6 +74,9 @@ export class ExchangeScreen extends React.Component<
                 <div className={this.blockName + '__cancel'}>
                     Cancel
                 </div>
+                <div className={this.blockName + '__rate'}>
+                    {`${CurrencySymbolMapper[fromCurrency]}1 = ${CurrencySymbolMapper[toCurrency]}${this.getRate().toFixed(2)}`}
+                </div>
                 <div
                     className={
                         this.blockName + '__exchange' + ' ' +
@@ -203,6 +206,15 @@ export class ExchangeScreen extends React.Component<
         const {
             fromValue
         } = this.state
+
+        const {
+            fromCurrency,
+            toCurrency
+        } = this.state
+
+        if (fromCurrency === toCurrency) {
+            return 'same currencies'
+        }
 
         const from = Number.parseFloat(fromValue)
 
@@ -359,7 +371,6 @@ export class ExchangeScreen extends React.Component<
         } = this.state
 
         const currentRates = rates[fromCurrency]
-        console.log('rates', rates, currentRates)
 
         if (!currentRates) {
             throw new Error(`There isn't exchange rate for ${fromCurrency}`)
