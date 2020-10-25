@@ -8,6 +8,14 @@ export interface ExchangeResponse {
     newToValue: number
 }
 
+export interface RateResponse {
+    base: string,
+    date: string,
+    rates: {
+        [index: string]: number
+    }
+}
+
 export class MockServerApi<S, StateExt, A extends Action, Ext> {
 
     store: Store<S & StateExt, A> & Ext
@@ -18,8 +26,7 @@ export class MockServerApi<S, StateExt, A extends Action, Ext> {
         console.log(this.store)
     }
 
-    public exchange = (
-        {
+    public exchange = ({
         fromValue,
         fromCurrency,
         toCurrency
@@ -27,8 +34,7 @@ export class MockServerApi<S, StateExt, A extends Action, Ext> {
         fromValue: number,
         fromCurrency: Currency,
         toCurrency: Currency
-    }
-    ): Promise<ExchangeResponse> => {
+    }): Promise<ExchangeResponse> => {
 
 
         const state: {
@@ -57,10 +63,18 @@ export class MockServerApi<S, StateExt, A extends Action, Ext> {
                     return
                 }
 
-                const rate = state.exchange.currentExchangeRate
+                const currentRates = state.exchange.rates[fromCurrency]
 
-                if (!rate) {
-                    rej(new Error(`MockServer. there isn't exchange rate`))
+                if (!currentRates) {
+                    rej(new Error(`MockServer. there isn't exchange rate for ${fromCurrency}`))
+                    return
+                }
+
+                const rate = currentRates[toCurrency]
+
+
+                if (typeof rate !== 'number') {
+                    rej(new Error(`MockServer. there isn't exchange rate for ${fromCurrency} -> ${toCurrency}`))
                     return
                 }
 
@@ -72,5 +86,34 @@ export class MockServerApi<S, StateExt, A extends Action, Ext> {
                 })
             }, Math.random() * 5000)
         })
+    }
+
+    public pollRate = async () => {
+        const {
+            pockets: {
+                pocketList
+            }
+        }: {
+            pockets: PocketState,
+            exchange: ExchangeState
+        } = this.store.getState() as any
+
+        return Promise.all(pocketList.map(pocket => {
+            const base = pocket.currency
+            const symbols = pocketList.filter(p => p.currency !== base).map(p=> p.currency).join(',')
+            const url = `https://api.exchangeratesapi.io/latest?base=${base}&symbols=${symbols}`
+
+            return new Promise(async (res, rej) => {
+                const response = await fetch(url)
+                if (response.ok) {
+                    const json: RateResponse = await response.json()
+                    res({
+                        [base]: json.rates
+                    })
+                } else {
+                    rej(new Error(`MockServer. Unsuccessful answer: ${response} for request: ${url}`))
+                }
+            })
+        }))
     }
 }

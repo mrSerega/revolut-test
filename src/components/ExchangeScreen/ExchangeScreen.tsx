@@ -1,5 +1,4 @@
 import React from 'react';
-import { runInThisContext } from 'vm';
 import { Currency, CurrencySymbolMapper } from '../../typings/currency';
 import { CurrencyInput } from '../CurrencyInput/CurrencyInput';
 import { Spinner } from '../Spinner/Spinner';
@@ -7,7 +6,11 @@ import { Spinner } from '../Spinner/Spinner';
 import './ExchangeScreen.css'
 
 export interface ExchangeScreenStateProps {
-    rate: number;
+    rates: {
+        [index: string]: {
+            [index: string]: number
+        }
+    };
     isExchangeLoading: boolean;
     pocketList: {
         currency: Currency,
@@ -54,7 +57,7 @@ export class ExchangeScreen extends React.Component<
     render() {
 
         const {
-            rate,
+            rates,
             isExchangeLoading,
             pocketList,
         } = this.props
@@ -127,14 +130,10 @@ export class ExchangeScreen extends React.Component<
             return
         }
 
-        const {
-            rate
-        } = this.props
-
         const from = Number.parseFloat(fromValue)
 
         if(!Number.isNaN(from)) {
-            const to = (from * rate).toFixed(2)
+            const to = (from * this.getRate()).toFixed(2)
             this.setState({
                 fromValue: fromValue,
                 toValue: to.toString()
@@ -155,14 +154,11 @@ export class ExchangeScreen extends React.Component<
             return
         }
 
-        const {
-            rate
-        } = this.props
 
         const to = Number.parseFloat(toValue)
 
         if(!Number.isNaN(to)) {
-            const from = (to * 1.0 / rate).toFixed(2)
+            const from = (to * 1.0 / this.getRate()).toFixed(2)
             this.setState({
                 fromValue: from.toString(),
                 toValue: toValue
@@ -194,16 +190,13 @@ export class ExchangeScreen extends React.Component<
     }
 
     private getToRateString = () => {
-        const {
-            rate
-        } = this.props
 
         const {
             toCurrency,
             fromCurrency,
         } = this.state
 
-        return `${CurrencySymbolMapper[toCurrency]}1 = ${CurrencySymbolMapper[fromCurrency]}${(1.0/rate).toFixed(2)}`
+        return `${CurrencySymbolMapper[toCurrency]}1 = ${CurrencySymbolMapper[fromCurrency]}${(1.0/this.getRate()).toFixed(2)}`
     }
 
     private getFromError = () => {
@@ -353,5 +346,31 @@ export class ExchangeScreen extends React.Component<
         }
 
         return toPocket.balance
+    }
+
+    private getRate = () => {
+        const {
+            rates,
+        } = this.props
+
+        const {
+            fromCurrency,
+            toCurrency
+        } = this.state
+
+        const currentRates = rates[fromCurrency]
+        console.log('rates', rates, currentRates)
+
+        if (!currentRates) {
+            throw new Error(`There isn't exchange rate for ${fromCurrency}`)
+        }
+
+        const rate = currentRates[toCurrency]
+
+        if (typeof rate !== 'number') {
+            throw new Error(`There isn't exchange rate for ${fromCurrency} -> ${toCurrency}`)
+        }
+
+        return rate
     }
 }

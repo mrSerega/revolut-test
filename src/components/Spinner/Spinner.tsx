@@ -16,9 +16,9 @@ export class Spinner extends React.Component<SpinnerProps> {
                 cy="28"
                 r="24"
                 stroke="white"
-                stroke-width="4"
+                strokeWidth="4"
                 fill="transparent"
-                stroke-dasharray="0 10" stroke-linecap="round"
+                strokeDasharray="0 10" strokeLinecap="round"
             />
         </svg>
     }

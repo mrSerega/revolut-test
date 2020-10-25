@@ -1,13 +1,10 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import './App.css';
-import { ExchangeScreen } from './components/ExchangeScreen/ExchangeScreen';
-import { ExchangeScreenContainer } from './components/ExchangeScreen/ExchangeScreenContainer';
-import { Currency } from './typings/currency';
+import { ExchangeScreenDataSourceContainer } from './components/ExchangeScreen/ExchnageScreenDataSourceContainer';
 
 function App() {
   return (
-    <ExchangeScreenContainer/>
+    <ExchangeScreenDataSourceContainer/>
   );
 }
 
