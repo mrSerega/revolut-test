@@ -93,7 +93,7 @@ export class ExchangeScreen extends React.Component<
                     error={this.getFromError()}
                     pocketList={pocketList.map(p => p.currency)} // FIXME:
                     onLeft={this.handleLeftFrom}
-                    onRight={() => null} // TODO:
+                    onRight={this.handleRightFrom}
                 />
             </div>
             <div className={this.blockName + '__to'}>
@@ -105,8 +105,8 @@ export class ExchangeScreen extends React.Component<
                     onChange={this.handleChangeToValue}
                     subtitle={this.getToRateString()}
                     pocketList={pocketList.map(p => p.currency)} // FIXME:
-                    onLeft={() => null}
-                    onRight={() => null}
+                    onLeft={this.handleLeftTo}
+                    onRight={this.handleRightTo}
                 />
             </div>
             {isExchangeLoading && <div className={this.blockName + '__cover'}>
@@ -224,15 +224,23 @@ export class ExchangeScreen extends React.Component<
 
         const {
             fromValue,
+            fromCurrency,
+            toCurrency
         } = this.state
 
         const {
-            isExchangeLoading
+            isExchangeLoading,
         } = this.props;
 
         const from = Number.parseFloat(fromValue)
 
-        return !!(this.getFromError() || Number.isNaN(from) || from <= 0 || isExchangeLoading)
+        return !!(
+            this.getFromError() ||
+            Number.isNaN(from) ||
+            from <= 0 ||
+            isExchangeLoading ||
+            fromCurrency === toCurrency
+        )
     }
 
     private handleLeftFrom = () => {
@@ -251,6 +259,63 @@ export class ExchangeScreen extends React.Component<
 
         this.setState({
             fromCurrency: pocketList[fromCurrencyIndex].currency
+        })
+    }
+
+    private handleRightFrom = () => {
+        const {
+            fromCurrency
+        } = this.state
+
+        const {
+            pocketList
+        } = this.props;
+
+        let fromCurrencyIndex = pocketList.findIndex(p => p.currency === fromCurrency) + 1
+        if (fromCurrencyIndex > pocketList.length - 1) {
+            fromCurrencyIndex = 0
+        }
+
+        this.setState({
+            fromCurrency: pocketList[fromCurrencyIndex].currency
+        })
+    }
+
+    private handleLeftTo = () => {
+        const {
+            toCurrency
+        } = this.state
+
+        const {
+            pocketList
+        } = this.props;
+
+        let toCurrencyIndex = pocketList.findIndex(p => p.currency === toCurrency) -1
+        if (toCurrencyIndex < 0) {
+            toCurrencyIndex = pocketList.length -1
+        }
+
+        this.setState({
+            toCurrency: pocketList[toCurrencyIndex].currency
+        })
+    }
+
+    private handleRightTo = () => {
+        const {
+            toCurrency
+        } = this.state
+
+        const {
+            pocketList
+        } = this.props;
+
+        let toCurrencyIndex = pocketList.findIndex(p => p.currency === toCurrency) + 1
+        if (toCurrencyIndex > pocketList.length - 1) {
+            toCurrencyIndex = 0
+        }
+
+        this.setState({
+            toCurrency: pocketList[toCurrencyIndex].currency
         })
     }
 
