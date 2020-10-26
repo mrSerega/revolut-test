@@ -7,9 +7,11 @@ import { toggleModal } from '../../actions/modalActions';
 
 const mapStateToProps = (state: RootState, ownProps: ModalIndexOwnProps): ModalIndexStateProps => {
     const modalKind = ModalSelector.getCurrentModalKind(state)
+    const message = ModalSelector.getModalMessage(state)
 
     return {
-        modalKind
+        modalKind,
+        message
     }
 }
 

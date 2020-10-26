@@ -3,6 +3,7 @@ import { ModalKind } from '../typings/modals'
 export const TOGGLE_MODAL = 'TOGGLE_MODAL'
 export interface ToggleModalPayload {
     modalKind?: ModalKind
+    message?: string
 }
 export interface ToggleModalAction {
     type: typeof TOGGLE_MODAL,

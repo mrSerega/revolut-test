@@ -7,8 +7,10 @@ export const modalInitialState: ModalState = {
 
 export interface ModalState {
     modalKind?: ModalKind
+    message?: string
 }
 
 export class ModalSelector {
     static getCurrentModalKind = (state: RootState) => state.modals.modalKind
+    static getModalMessage= (state: RootState) => state.modals.message
 }

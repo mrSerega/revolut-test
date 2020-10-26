@@ -4,6 +4,7 @@ import { ModalWindow } from './ModalWindow';
 
 export interface ModalIndexStateProps {
     modalKind?: ModalKind
+    message?: string
 }
 
 export interface ModalIndexDispatchProps {
@@ -23,7 +24,8 @@ export class ModalIndex extends React.Component<ModalIndexProps> {
     render() {
         const {
             modalKind,
-            onClose
+            onClose,
+            message
         } = this.props
 
         if (!modalKind) {
@@ -35,6 +37,7 @@ export class ModalIndex extends React.Component<ModalIndexProps> {
             default:
                 return <ModalWindow
                     onClose={onClose}
+                    message={message || ''}
                 />
         }
     }

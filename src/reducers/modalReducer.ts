@@ -8,7 +8,8 @@ export function modalReducer(
         case TOGGLE_MODAL:
             return {
                 ...state,
-                modalKind: action.payload.modalKind
+                modalKind: action.payload.modalKind,
+                message: action.payload.message
             }
         default:
             return state

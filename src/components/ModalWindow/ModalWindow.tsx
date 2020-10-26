@@ -8,6 +8,7 @@ export interface ModalWindowDispatchProps {}
 
 export interface ModalWindowOwnProps {
     onClose: () => void;
+    message: string
 }
 
 export type ModalWindowProps =
@@ -30,7 +31,8 @@ export class ModalWindow extends React.Component<ModalWindowProps> {
     render(){
 
         const {
-            onClose
+            onClose,
+            message
         } = this.props
 
         return <div className={this.blockName + '__cover'}>
@@ -39,8 +41,7 @@ export class ModalWindow extends React.Component<ModalWindowProps> {
                     Oops!
                 </div>
                 <div className={this.blockName + '__error-content'}>
-                    Please try again.<br/>
-                    Mock server generate random errors :)
+                    {message}
                 </div>
                 <div className={this.blockName + '__error-footer'}>
                     <div

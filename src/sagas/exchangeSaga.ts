@@ -3,6 +3,9 @@ import { all, call, delay, put, race, take, takeLatest } from 'redux-saga/effect
 import { ExchangeResponse } from '../mock/mockServer';
 import { mockServerApi } from '../store/store';
 import { updatePocket } from '../actions/pocketActions';
+import { toggleModal } from '../actions/modalActions';
+import { ModalKind } from '../typings/modals';
+import { POLL_DELAY } from '../typings/consts';
 
 
 
@@ -25,20 +28,20 @@ function* sendExchangeHandler({
                 value: newToValue
             }))
         ])
-
-        yield put(toggleExchangeLoading({value: false}))
-
     } catch (err) {
-        console.log('ERROR!!!!', err)
-        throw (err) // TODO:
+        yield put(toggleModal({
+            modalKind: ModalKind.ErrorModal,
+            message: `Exchange error: ${err}`
+        }))
+        // throw (err) // TODO: send error to sentry
+    } finally {
+        yield put(toggleExchangeLoading({value: false}))
     }
 }
 
 function* pollRate() {
-    console.log('start poll')
     while (true) {
         try {
-            console.log('POLL')
             const responses: {
                 [index: string]: {
                     [index: string]: number
@@ -52,11 +55,14 @@ function* pollRate() {
                 }
             });
             yield put(updateRates({rates}))
-            yield delay(10000) // TODO: use const
+            yield delay(POLL_DELAY)
         } catch (err) {
-            console.log('ERRR0RRR~!', err) // TODO:
-            // handle stop here
+            yield put(toggleModal({
+                modalKind: ModalKind.ErrorModal,
+                message: 'Rate poll error. Polling is stopped'
+            }))
             yield put({ type: STOP_POLL_RATE, err });
+            throw Error(err) // TODO"
         }
     }
 }

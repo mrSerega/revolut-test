@@ -2,6 +2,7 @@ import { Action, Store } from 'redux';
 import { Currency } from '../typings/currency';
 import { PocketState } from '../states/pocketsState';
 import { ExchangeState } from '../states/exchangeState';
+import { EXCHANGE_ERROR_PROBABILITY, EXCHANGE_MAX_DELAY } from '../typings/consts';
 
 export interface ExchangeResponse {
     newFromValue: number,
@@ -42,8 +43,15 @@ export class MockServerApi<S, StateExt, A extends Action, Ext> {
             exchange: ExchangeState
         } = this.store.getState() as any
 
+
+
         return new Promise((res, rej) => {
             setTimeout(() => {
+
+                if (Math.random() < EXCHANGE_ERROR_PROBABILITY) {
+                    rej('Random error. This error was generated just for demonstration of error handling. Have a nice day :)')
+                }
+
                 const fromPocket = state.pockets.pocketList.find(p => p.currency === fromCurrency)
 
                 if (!fromPocket) {
@@ -84,7 +92,7 @@ export class MockServerApi<S, StateExt, A extends Action, Ext> {
                     newFromValue,
                     newToValue
                 })
-            }, Math.random() * 5000)
+            }, Math.random() * EXCHANGE_MAX_DELAY)
         })
     }
 
