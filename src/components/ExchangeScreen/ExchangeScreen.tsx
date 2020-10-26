@@ -71,20 +71,8 @@ export class ExchangeScreen extends React.Component<
 
         return <div className={this.blockName}>
             <div className={this.blockName + '__header'}>
-                <div className={this.blockName + '__cancel'}>
-                    Cancel
-                </div>
                 <div className={this.blockName + '__rate'}>
                     {`${CurrencySymbolMapper[fromCurrency]}1 = ${CurrencySymbolMapper[toCurrency]}${this.getRate().toFixed(2)}`}
-                </div>
-                <div
-                    className={
-                        this.blockName + '__exchange' + ' ' +
-                        this.blockName + '__exchange' + (this.isExchangeDisabled() ? '_disabled' : '')
-                    }
-                    onClick={this.handleExchange}
-                >
-                    Exchange
                 </div>
             </div>
             <div className={this.blockName + '__from'}>
@@ -114,6 +102,17 @@ export class ExchangeScreen extends React.Component<
                     onLeft={this.handleLeftTo}
                     onRight={this.handleRightTo}
                 />
+            </div>
+            <div className={this.blockName + '__footer'}>
+            <div
+                className={
+                    this.blockName + '__exchange' + ' ' +
+                    this.blockName + '__exchange' + (this.isExchangeDisabled() ? '_disabled' : '')
+                }
+                onClick={this.handleExchange}
+            >
+                    Exchange
+                </div>
             </div>
             {isExchangeLoading && <div className={this.blockName + '__cover'}>
                 <div className={this.blockName + '__spinner'}>
