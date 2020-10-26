@@ -1,5 +1,6 @@
 import React from 'react';
 import { ExchangeScreenDataSourceContainer } from '../ExchangeScreen/ExchnageScreenDataSourceContainer';
+import { ModalIndexContainer } from '../ModalWindow/ModalIndexContainer';
 import './DemoWidget.css'
 
 export interface DemoWidgetProps {}
@@ -11,6 +12,7 @@ export class DemoWidget extends React.Component<DemoWidgetProps> {
     render() {
         return <div className={this.blockName}>
             <ExchangeScreenDataSourceContainer/>
+            <ModalIndexContainer/>
         </div>
     }
 }
