@@ -10,7 +10,7 @@ describe('pockets reducer', () => {
                 pocketInitialState,
                 updatePocket({
                     currency: Currency.USD,
-                    value: 1337
+                    value: 60
                 })
             )
         ).toEqual({
@@ -19,7 +19,7 @@ describe('pockets reducer', () => {
                 ...pocketInitialState.pocketList.filter(p => p.currency !== Currency.USD),
                 {
                     currency: Currency.USD,
-                    balance: 1337
+                    balance: 60
                 }
             ]
         })

@@ -1,4 +1,4 @@
-import { SendExchangeAction, SEND_EXCHANGE, START_POLL_RATE, STOP_POLL_RATE, toggleExchangeLoading, updateRates } from '../actions/exchangeActions';
+import { SendExchangeAction, SEND_EXCHANGE, START_POLL_RATE, STOP_POLL_RATE, toggleExchangeLoading, updateRates, stopPollRate } from '../actions/exchangeActions';
 import { all, call, delay, put, race, take, takeLatest } from 'redux-saga/effects'
 import { ExchangeResponse } from '../mock/mockServer';
 import { mockServerApi } from '../store/store';
@@ -9,7 +9,7 @@ import { POLL_DELAY } from '../typings/consts';
 
 
 
-function* sendExchangeHandler({
+export function* sendExchangeHandler({
     payload
 }: SendExchangeAction) {
     try {
@@ -39,7 +39,7 @@ function* sendExchangeHandler({
     }
 }
 
-function* pollRate() {
+export function* pollRate() {
     while (true) {
         try {
             const responses: {
@@ -61,7 +61,7 @@ function* pollRate() {
                 modalKind: ModalKind.ErrorModal,
                 message: 'Rate poll error. Polling is stopped'
             }))
-            yield put({ type: STOP_POLL_RATE, err });
+            yield put(stopPollRate());
             // TODO: send error to sentry or something similar
         }
     }

@@ -22,9 +22,7 @@ export class MockServerApi<S, StateExt, A extends Action, Ext> {
     store: Store<S & StateExt, A> & Ext
 
     constructor(store: Store<S & StateExt, A> & Ext) {
-        console.log('constructor', store)
         this.store = store
-        console.log(this.store)
     }
 
     public exchange = ({
@@ -112,14 +110,18 @@ export class MockServerApi<S, StateExt, A extends Action, Ext> {
             const url = `https://api.exchangeratesapi.io/latest?base=${base}&symbols=${symbols}`
 
             return new Promise(async (res, rej) => {
-                const response = await fetch(url)
-                if (response.ok) {
-                    const json: RateResponse = await response.json()
-                    res({
-                        [base]: {...json.rates, [base]: 1.0}
-                    })
-                } else {
-                    rej(new Error(`MockServer. Unsuccessful answer: ${response} for request: ${url}`))
+                try {
+                    const response = await fetch(url)
+                    if (response.ok) {
+                        const json: RateResponse = await response.json()
+                        res({
+                            [base]: {...json.rates, [base]: 1.0}
+                        })
+                    } else {
+                        rej(new Error(`MockServer. Unsuccessful answer: ${response} for request: ${url}`))
+                    }
+                } catch (err) {
+                    rej(err)
                 }
             })
         }))
