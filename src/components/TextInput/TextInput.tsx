@@ -11,6 +11,8 @@ export interface TextInputProps {
     isFrom?: boolean
 }
 
+const floatRegExp = /^(\d*)\.?(\d{1,2})?$/
+
 export class TextInput extends React.Component<TextInputProps> {
     readonly blockName = 'text-input'
 
@@ -51,7 +53,6 @@ export class TextInput extends React.Component<TextInputProps> {
         } = this.props
 
         const val = evt.target.value
-        const floatRegExp = /^(\d*)\.?(\d{1,2})?$/
 
         if (floatRegExp.test(val)) {
             onChange(val)

@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModalWindow 1`] = `
+<div
+  className="modal-window__cover"
+>
+  <div
+    className="modal-window__error-dialog"
+  >
+    <div
+      className="modal-window__error-title"
+    >
+      Oops!
+    </div>
+    <div
+      className="modal-window__error-content"
+    >
+      message
+    </div>
+    <div
+      className="modal-window__error-footer"
+    >
+      <div
+        className="modal-window__button "
+        onClick={[Function]}
+      >
+        OK
+      </div>
+    </div>
+  </div>
+</div>
+`;

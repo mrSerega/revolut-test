@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Spinner 1`] = `
+<svg
+  className="spinner"
+  height="56"
+  width="56"
+>
+  <circle
+    cx="28"
+    cy="28"
+    fill="transparent"
+    r="24"
+    stroke="white"
+    strokeDasharray="0 10"
+    strokeLinecap="round"
+    strokeWidth="4"
+  />
+</svg>
+`;
