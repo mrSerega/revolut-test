@@ -45,7 +45,6 @@ export class ExchangeScreenDataSource extends React.Component<ExchangeScreenData
         } = this.props;
 
         if (isRatesLading && !rates || !isRatesInitialized) {
-            console.log('loading')
             return <div className={this.blockName + '__loading-plug'}>
                 <div className={this.blockName + '__spinner'}>
                     <Spinner/>

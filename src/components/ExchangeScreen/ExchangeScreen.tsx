@@ -85,7 +85,7 @@ export class ExchangeScreen extends React.Component<
                     value={fromValue}
                     onChange={this.handleChangeFromValue}
                     error={this.getFromError()}
-                    pocketList={pocketList.map(p => p.currency)} // FIXME:
+                    pocketList={pocketList.map(p => p.currency)}
                     onLeft={this.handleLeftFrom}
                     onRight={this.handleRightFrom}
                 />
@@ -98,7 +98,7 @@ export class ExchangeScreen extends React.Component<
                     value={toValue}
                     onChange={this.handleChangeToValue}
                     subtitle={this.getToRateString()}
-                    pocketList={pocketList.map(p => p.currency)} // FIXME:
+                    pocketList={pocketList.map(p => p.currency)}
                     onLeft={this.handleLeftTo}
                     onRight={this.handleRightTo}
                 />

@@ -33,7 +33,7 @@ function* sendExchangeHandler({
             modalKind: ModalKind.ErrorModal,
             message: `Exchange error: ${err}`
         }))
-        // throw (err) // TODO: send error to sentry
+        // TODO: send error to sentry or something similar
     } finally {
         yield put(toggleExchangeLoading({value: false}))
     }
@@ -62,7 +62,7 @@ function* pollRate() {
                 message: 'Rate poll error. Polling is stopped'
             }))
             yield put({ type: STOP_POLL_RATE, err });
-            throw Error(err) // TODO"
+            // TODO: send error to sentry or something similar
         }
     }
 }

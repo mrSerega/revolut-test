@@ -56,7 +56,7 @@
 
 .exchange-screen__exchange_disabled {
     color: var(--color-gray-4);
-    cursor: auto;
+    cursor: default;
     border-color: var(--color-gray-4);
 }
 
