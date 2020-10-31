@@ -2,7 +2,8 @@ import { ModalKind } from '../typings/modals';
 import { RootState } from './indexState';
 
 export const modalInitialState: ModalState = {
-    modalKind: undefined
+    modalKind: undefined,
+    message: undefined
 }
 
 export interface ModalState {
