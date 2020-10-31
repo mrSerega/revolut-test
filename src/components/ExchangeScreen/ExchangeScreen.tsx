@@ -47,11 +47,22 @@ export class ExchangeScreen extends React.Component<
 
     readonly blockName = 'exchange-screen'
 
-    state: ExchangeScreenState = {
-        fromValue: '',
-        toValue:  '',
-        fromCurrency: Currency.GBP,
-        toCurrency: Currency.USD
+    constructor(props: ExchangeScreenProps) {
+        super(props)
+
+        if (!props.pocketList[0]) {
+            throw new Error('At least one pocket should exists')
+        }
+
+        const pocketFrom = props.pocketList[0]
+        const pocketTo = props.pocketList[1] || props.pocketList[0]
+
+        this.state = {
+            fromValue: '',
+            toValue:  '',
+            fromCurrency: pocketFrom.currency,
+            toCurrency: pocketTo.currency
+        }
     }
 
     render() {

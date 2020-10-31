@@ -3,6 +3,7 @@ import React from 'react';
 import { Currency } from '../../typings/currency';
 import { CurrencyInput } from './CurrencyInput';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+
 configure({ adapter: new Adapter() })
 
 test('CurrencyInput', () => {
