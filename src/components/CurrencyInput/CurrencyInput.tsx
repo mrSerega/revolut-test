@@ -51,6 +51,7 @@ export class CurrencyInput extends React.Component<CurrencyInputProps> {
                     autoFocus={autoFocus}
                     placeholder="00.00"
                     isFrom={isFrom}
+                    maxLength={9}
                 />
             </div>
             <div className={this.blockName + '__bottom'}>

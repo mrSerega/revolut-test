@@ -9,6 +9,7 @@ export interface TextInputProps {
     autoFocus?: boolean;
     placeholder?: string
     isFrom?: boolean
+    maxLength?: number;
 }
 
 const floatRegExp = /^(\d*)\.?(\d{1,2})?$/
@@ -55,7 +56,7 @@ export class TextInput extends React.Component<TextInputProps> {
         const val = evt.target.value
 
         if (floatRegExp.test(val)) {
-            onChange(val)
+            onChange(val.slice(0, this.props.maxLength))
         }
     }
 }
