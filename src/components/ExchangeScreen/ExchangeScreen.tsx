@@ -195,11 +195,17 @@ export class ExchangeScreen extends React.Component<
 
         const fromV = Number.parseFloat(fromValue)
 
-        !this.isExchangeDisabled() && onExchange(
-            fromV,
-            fromCurrency,
-            toCurrency
-        )
+        if(!this.isExchangeDisabled()){
+            onExchange(
+                fromV,
+                fromCurrency,
+                toCurrency
+            )
+            this.setState({
+                fromValue: "",
+                toValue: ""
+            })
+        }
     }
 
     private getToRateString = () => {
@@ -273,7 +279,9 @@ export class ExchangeScreen extends React.Component<
         }
 
         this.setState({
-            fromCurrency: pocketList[fromCurrencyIndex].currency
+            fromCurrency: pocketList[fromCurrencyIndex].currency,
+            fromValue: "",
+            toValue: ""
         })
     }
 
@@ -292,7 +300,9 @@ export class ExchangeScreen extends React.Component<
         }
 
         this.setState({
-            fromCurrency: pocketList[fromCurrencyIndex].currency
+            fromCurrency: pocketList[fromCurrencyIndex].currency,
+            fromValue: "",
+            toValue: ""
         })
     }
 
@@ -311,7 +321,9 @@ export class ExchangeScreen extends React.Component<
         }
 
         this.setState({
-            toCurrency: pocketList[toCurrencyIndex].currency
+            toCurrency: pocketList[toCurrencyIndex].currency,
+            fromValue: "",
+            toValue: ""
         })
     }
 
@@ -330,7 +342,9 @@ export class ExchangeScreen extends React.Component<
         }
 
         this.setState({
-            toCurrency: pocketList[toCurrencyIndex].currency
+            toCurrency: pocketList[toCurrencyIndex].currency,
+            fromValue: "",
+            toValue: ""
         })
     }
 

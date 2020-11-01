@@ -87,6 +87,13 @@ test('Exchange screen', () => {
     ).toBe('same currencies')
     expect(
         cmp
+            .find(CurrencyInput)
+            .at(1)
+            .props()
+            .value
+    ).toBe("")
+    expect(
+        cmp
             .find('.exchange-screen__exchange')
             .hasClass('exchange-screen__exchange_disabled')
     ).toBeTruthy()
@@ -95,11 +102,16 @@ test('Exchange screen', () => {
         .at(0)
         .props()
         .onLeft()
-        expect(
-            cmp
-                .find('.exchange-screen__exchange')
-                .hasClass('exchange-screen__exchange_disabled')
-        ).toBeFalsy()
+    cmp
+        .find(CurrencyInput)
+        .at(0)
+        .props()
+        .onChange("50.00")
+    expect(
+        cmp
+            .find('.exchange-screen__exchange')
+            .hasClass('exchange-screen__exchange_disabled')
+    ).toBeFalsy()
     cmp
         .find('.exchange-screen__exchange')
         .simulate('click')
