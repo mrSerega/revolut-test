@@ -9,7 +9,7 @@
 ## Tested with ##
 1. jest
 2. enzyme for react components
-4. edux-saga-test-plan from sagas
+4. redux-saga-test-plan from sagas
 
 # Meta #
 
