@@ -18,14 +18,9 @@ export interface ExchangeScreenDataSourceDispatchProps {
     startPollRates: () => void
 }
 
-export interface ExchangeScreenDataSourceOwnProps {
-
-}
-
 export type ExchangeScreenDataSourceProps =
     & ExchangeScreenDataSourceStateProps
     & ExchangeScreenDataSourceDispatchProps
-    & ExchangeScreenDataSourceOwnProps
 
 export class ExchangeScreenDataSource extends React.Component<ExchangeScreenDataSourceProps> {
     readonly blockName = 'exchange-screen-data-source'

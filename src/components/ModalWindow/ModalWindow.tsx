@@ -2,18 +2,12 @@ import React from 'react';
 
 import './ModalWindow.css'
 
-export interface ModalWindowStateProps {}
-
-export interface ModalWindowDispatchProps {}
-
 export interface ModalWindowOwnProps {
     onClose: () => void;
     message: string
 }
 
 export type ModalWindowProps =
-    & ModalWindowStateProps
-    & ModalWindowDispatchProps
     & ModalWindowOwnProps
 
 export class ModalWindow extends React.Component<ModalWindowProps> {

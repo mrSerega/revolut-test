@@ -11,12 +11,9 @@ export interface ModalIndexDispatchProps {
     onClose: () => void;
 }
 
-export interface ModalIndexOwnProps {}
-
 export type ModalIndexProps =
     & ModalIndexStateProps
     & ModalIndexDispatchProps
-    & ModalIndexOwnProps
 
 export class ModalIndex extends React.Component<ModalIndexProps> {
     readonly = 'modal-index'

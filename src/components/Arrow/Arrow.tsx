@@ -4,9 +4,7 @@
 
 import React from 'react'
 
-export interface ArrowProps {}
-
-export class Arrow extends React.Component<ArrowProps> {
+export class Arrow extends React.Component {
     readonly blockName = 'arrow'
 
     render() {

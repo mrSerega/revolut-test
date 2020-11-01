@@ -2,11 +2,7 @@ import React from 'react';
 
 import './Spinner.css'
 
-export interface SpinnerProps {
-
-}
-
-export class Spinner extends React.Component<SpinnerProps> {
+export class Spinner extends React.Component {
     readonly blockName = 'spinner'
 
     render() {

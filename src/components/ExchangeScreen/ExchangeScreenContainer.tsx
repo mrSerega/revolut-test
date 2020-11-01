@@ -1,12 +1,12 @@
 import { connect } from 'react-redux';
-import { ExchangeScreen, ExchangeScreenStateProps, ExchangeScreenDispatchProps, ExchangeScreenOwnProps } from './ExchangeScreen';
+import { ExchangeScreen, ExchangeScreenStateProps, ExchangeScreenDispatchProps } from './ExchangeScreen';
 import { RootState } from '../../states/indexState';
 import { Dispatch } from 'redux';
 import { sendExchange, startPollRate } from '../../actions/exchangeActions';
 import { ExchangeSelector } from '../../states/exchangeState';
 import { Currency } from '../../typings/currency';
 
-const mapStateToProps = (state: RootState, ownProps: ExchangeScreenOwnProps): ExchangeScreenStateProps => {
+const mapStateToProps = (state: RootState): ExchangeScreenStateProps => {
     const rates = ExchangeSelector.getRate(state)
 
     if (rates === undefined) {
@@ -20,7 +20,7 @@ const mapStateToProps = (state: RootState, ownProps: ExchangeScreenOwnProps): Ex
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch, ownProps: ExchangeScreenOwnProps): ExchangeScreenDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch): ExchangeScreenDispatchProps => ({
     onExchange: (
         fromValue: number,
         fromCurrency: Currency,
@@ -35,7 +35,7 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: ExchangeScreenOwnProps
 export const ExchangeScreenContainer = connect<
     ExchangeScreenStateProps,
     ExchangeScreenDispatchProps,
-    ExchangeScreenOwnProps,
+    {},
     RootState
 >(
     mapStateToProps,

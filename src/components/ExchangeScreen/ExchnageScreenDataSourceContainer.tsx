@@ -1,12 +1,11 @@
 import { connect } from 'react-redux';
 import { RootState } from '../../states/indexState';
 import { Dispatch } from 'redux';
-import { sendExchange, startPollRate } from '../../actions/exchangeActions';
+import { startPollRate } from '../../actions/exchangeActions';
 import { ExchangeSelector } from '../../states/exchangeState';
-import { Currency } from '../../typings/currency';
-import { ExchangeScreenDataSource, ExchangeScreenDataSourceDispatchProps, ExchangeScreenDataSourceOwnProps, ExchangeScreenDataSourceStateProps } from './ExchnageScreenDataSource';
+import { ExchangeScreenDataSource, ExchangeScreenDataSourceDispatchProps, ExchangeScreenDataSourceStateProps } from './ExchnageScreenDataSource';
 
-const mapStateToProps = (state: RootState, ownProps: ExchangeScreenDataSourceOwnProps): ExchangeScreenDataSourceStateProps => {
+const mapStateToProps = (state: RootState): ExchangeScreenDataSourceStateProps => {
     const rates = ExchangeSelector.getRate(state)
     const flags = ExchangeSelector.getFlags(state)
 
@@ -17,14 +16,14 @@ const mapStateToProps = (state: RootState, ownProps: ExchangeScreenDataSourceOwn
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch, ownProps: ExchangeScreenDataSourceOwnProps): ExchangeScreenDataSourceDispatchProps => ({
+const mapDispatchToProps = (dispatch: Dispatch): ExchangeScreenDataSourceDispatchProps => ({
     startPollRates: () => dispatch(startPollRate())
 })
 
 export const ExchangeScreenDataSourceContainer = connect<
     ExchangeScreenDataSourceStateProps,
     ExchangeScreenDataSourceDispatchProps,
-    ExchangeScreenDataSourceOwnProps,
+    {},
     RootState
 >(
     mapStateToProps,

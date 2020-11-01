@@ -26,12 +26,9 @@ export interface ExchangeScreenDispatchProps {
     ) => void;
 }
 
-export interface ExchangeScreenOwnProps {}
-
 export type ExchangeScreenProps =
     & ExchangeScreenStateProps
     & ExchangeScreenDispatchProps
-    & ExchangeScreenOwnProps
 
 export interface ExchangeScreenState {
     fromValue: string

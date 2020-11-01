@@ -3,9 +3,7 @@ import { ExchangeScreenDataSourceContainer } from '../ExchangeScreen/ExchnageScr
 import { ModalIndexContainer } from '../ModalWindow/ModalIndexContainer';
 import './DemoWidget.css'
 
-export interface DemoWidgetProps {}
-
-export class DemoWidget extends React.Component<DemoWidgetProps> {
+export class DemoWidget extends React.Component {
 
     readonly blockName = 'demo-widget'
 
