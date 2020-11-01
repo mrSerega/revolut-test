@@ -1,3 +1,18 @@
+# Test task. Currency exchange screen #
+
+## Stack ##
+1. React
+2. typescript
+3. redux
+4. redux-saga
+
+## Tested with ##
+1. jest
+2. enzyme for react components
+4. edux-saga-test-plan from sagas
+
+# Meta #
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
