@@ -1,3 +1,4 @@
 export enum ModalKind {
-    ErrorModal = 'ErrorModal'
+    ErrorModal = 'ErrorModal',
+    CommonModal = 'CommonModal'
 }

@@ -107,7 +107,8 @@ export class MockServerApi<S, StateExt, A extends Action, Ext> {
         return Promise.all(pocketList.map(pocket => {
             const base = pocket.currency
             const symbols = pocketList.filter(p => p.currency !== base).map(p=> p.currency).join(',')
-            const url = `https://api.exchangeratesapi.io/latest?base=${base}&symbols=${symbols}`
+            const apiKey = '353794eb8441729883ad16f41d6fdb11'
+            const url = `http://api.exchangeratesapi.io/latest?access_key=${apiKey}&base=${base}&symbols=${symbols}`
 
             return new Promise(async (res, rej) => {
                 try {

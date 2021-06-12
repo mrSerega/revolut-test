@@ -3,7 +3,7 @@ import { ModalKind } from '../../typings/modals';
 import { ModalWindow } from './ModalWindow';
 
 export interface ModalIndexStateProps {
-    modalKind?: ModalKind
+    modalKind: ModalKind | null
     message?: string
 }
 
@@ -30,12 +30,19 @@ export class ModalIndex extends React.Component<ModalIndexProps> {
         }
 
         switch (modalKind) {
+            case ModalKind.CommonModal:
+                return <ModalWindow
+                    onClose={onClose}
+                    message="CommonModal"
+                />
             case ModalKind.ErrorModal:
-            default:
                 return <ModalWindow
                     onClose={onClose}
                     message={message || ''}
                 />
+            default:
+                const unknownModalKind: never = modalKind
+                throw new Error(`Unknown modal kind: ${unknownModalKind}`)
         }
     }
 }

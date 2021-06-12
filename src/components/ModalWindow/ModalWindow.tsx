@@ -40,7 +40,7 @@ export class ModalWindow extends React.Component<ModalWindowProps> {
                 <div className={this.blockName + '__error-footer'}>
                     <div
                         className={
-                            this.blockName + '__button' + ' '
+                            this.blockName + '__button'
                         }
                         onClick={onClose}
                     >

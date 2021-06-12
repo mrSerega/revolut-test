@@ -2,13 +2,16 @@ import { ModalKind } from '../typings/modals';
 import { RootState } from './indexState';
 
 export const modalInitialState: ModalState = {
-    modalKind: undefined,
+    modalKind: null,
     message: undefined
 }
 
-export interface ModalState {
-    modalKind?: ModalKind
-    message?: string
+export type ModalState = {
+    modalKind: ModalKind
+    message: string
+} | {
+    modalKind: null
+    message: undefined
 }
 
 export class ModalSelector {
