@@ -1,0 +1,27 @@
+.layout {
+    background-color:  var(--color-dark-blue);
+    height: 100%;
+}
+
+.layout__menu {
+    display: flex;
+    justify-content: space-around;
+    padding: 32px 32px;
+    position: absolute;
+    bottom: 0;
+    width: calc(100% - 64px);
+}
+
+.layout__dashboard-link {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    background: url('./dashboard.svg');
+}
+
+.layout__wallet-link {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    background: url('./wallet.svg');
+}

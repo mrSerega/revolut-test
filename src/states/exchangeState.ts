@@ -1,4 +1,3 @@
-import { Currency } from '../typings/currency'
 import { RootState } from './indexState'
 
 export interface ExchangeState {

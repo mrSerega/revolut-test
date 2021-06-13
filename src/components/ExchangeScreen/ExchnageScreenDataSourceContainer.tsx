@@ -12,7 +12,7 @@ const mapStateToProps = (state: RootState): ExchangeScreenDataSourceStateProps =
     return {
         rates,
         isRatesInitialized: flags.isRatesInitialized,
-        isRatesLading: flags.isRatesLoading
+        isRatesLoading: flags.isRatesLoading
     }
 }
 

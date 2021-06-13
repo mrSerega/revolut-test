@@ -1,7 +1,10 @@
+import { url } from 'inspector';
 import React from 'react'
 
 import { Currency, CurrencySymbolMapper } from '../../typings/currency';
 import { Pocket } from '../../typings/pocket';
+
+import './Dashboard.css';
 
 export interface DashboardProps {
     name: string
@@ -11,6 +14,7 @@ export interface DashboardProps {
     overallBalance: number
     primaryCurrency: Currency,
     relevantDate: Date
+    onUserPickClick: () => void;
 }
 
 const className = 'dashboard'
@@ -18,20 +22,23 @@ const className = 'dashboard'
 const Header: React.FC<DashboardProps> = ({
     name,
     surname,
-    picUrl
+    picUrl,
+    onUserPickClick
 }: DashboardProps) => {
     return  <div className={className + '__header'}>
         <div className={className + '__login'}>
             <div className={className + '__name'}>
                 {name + ' '}
             </div>
-            <div className={className + '__surname'}>
+            <b className={className + '__surname'}>
                 {surname[0] + '.'}
-            </div>
+            </b>
         </div>
-        <div className={className + '__userpick'}>
-            {picUrl /* TODO: use real pick */}
-        </div>
+        <div
+            className={className + '__userpick'}
+            style={{background: `url(${picUrl})`}}
+            onClick={onUserPickClick}
+        />
     </div>
 }
 
@@ -55,7 +62,7 @@ const Balance: React.FC<DashboardProps> = ({
                 <b>Overall: </b>{`${CurrencySymbolMapper[primaryCurrency]}${overallBalance}`}
             </div>
             <div className={className + '__overall-relevant'}>
-                {`relevant on ${relevantDate}`}
+                {`relevant on ${relevantDate.toDateString()}`}
             </div>
         </div>
     </div>

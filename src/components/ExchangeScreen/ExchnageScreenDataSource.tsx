@@ -10,7 +10,7 @@ export interface ExchangeScreenDataSourceStateProps {
             [index: string]: number
         }
     },
-    isRatesLading: boolean;
+    isRatesLoading: boolean;
     isRatesInitialized: boolean;
 }
 
@@ -35,11 +35,11 @@ export class ExchangeScreenDataSource extends React.Component<ExchangeScreenData
     render() {
         const {
             rates,
-            isRatesLading,
+            isRatesLoading,
             isRatesInitialized
         } = this.props;
 
-        if (isRatesLading && !rates || !isRatesInitialized) {
+        if (isRatesLoading && !rates || !isRatesInitialized) {
             return <div className={this.blockName + '__loading-plug'}>
                 <div className={this.blockName + '__spinner'}>
                     <Spinner/>
@@ -47,7 +47,7 @@ export class ExchangeScreenDataSource extends React.Component<ExchangeScreenData
             </div>
         }
 
-        if (!isRatesLading && !rates) {
+        if (!isRatesLoading && !rates) {
             return <div className={this.blockName + '__error-plug'}>
                 <div className={this.blockName + '__error-text'}>
                     ERROR<br/><br/>
