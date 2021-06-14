@@ -48,7 +48,6 @@ export function* pollRate() {
                 }
             }[] = yield call(mockServerApi.pollRate)
             let rates  = {}
-            console.log(responses)
             responses.forEach(r => {
                 rates = {
                     ...rates,

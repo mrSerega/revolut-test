@@ -21,7 +21,7 @@ exports[`ModalWindow 1`] = `
       className="modal-window__error-footer"
     >
       <div
-        className="modal-window__button "
+        className="modal-window__button"
         onClick={[Function]}
       >
         OK
