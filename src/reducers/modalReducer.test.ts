@@ -24,7 +24,7 @@ describe('modal reducer', () => {
         expect(
             modalReducer(
                 modalInitialState,
-                toggleModal({})
+                toggleModal({modalKind: null})
             )
         ).toEqual(
             modalInitialState,

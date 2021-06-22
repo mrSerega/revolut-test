@@ -1,0 +1,40 @@
+.dashboard {
+    color: var(--color-gray-6);
+}
+
+.dashboard__header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 24px;
+    margin: 0 8px 0 8px;
+    padding: 8px 0 16px 0;
+    border-bottom: 1px solid var(--color-gray-6);
+}
+
+.dashboard__login {
+    display: flex;
+    white-space: pre-wrap
+}
+
+.dashboard__userpick {
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.dashboard__balance {
+    margin: 16px 8px 0 8px;
+    font-size: 20px;
+}
+
+.dashboard__overall {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.dashboard__overall-relevant {
+    color: var(--color-gray-4);
+    font-size: 16px;
+}

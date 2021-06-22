@@ -1,10 +1,17 @@
 import { ModalKind } from '../typings/modals'
 
 export const TOGGLE_MODAL = 'TOGGLE_MODAL'
-export interface ToggleModalPayload {
-    modalKind?: ModalKind
-    message?: string
+
+export type ToggleModalPayload = {
+    modalKind: ModalKind.ErrorModal
+    message: string
+} | {
+    modalKind: ModalKind.CommonModal
+    message: string // TODO: use react element
+} | {
+    modalKind: null
 }
+
 export interface ToggleModalAction {
     type: typeof TOGGLE_MODAL,
     payload: ToggleModalPayload

@@ -16,7 +16,7 @@ const mapStateToProps = (state: RootState): ModalIndexStateProps => {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): ModalIndexDispatchProps => ({
-    onClose: () => dispatch(toggleModal({modalKind: undefined}))
+    onClose: () => dispatch(toggleModal({modalKind: null}))
 })
 
 export const ModalIndexContainer = connect<

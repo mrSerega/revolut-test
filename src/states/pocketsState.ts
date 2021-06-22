@@ -25,4 +25,5 @@ export interface PocketState {
 
 export class PocketSelector {
     static getPocket = (currency: Currency) => (state: RootState) => state.pockets.pocketList.find(p => p.currency === currency)
+    static getPocketList = (state: RootState) => state.pockets.pocketList
 }

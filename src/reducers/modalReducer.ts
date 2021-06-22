@@ -6,10 +6,19 @@ export function modalReducer(
 ): ModalState {
     switch (action.type) {
         case TOGGLE_MODAL:
-            return {
-                ...state,
-                modalKind: action.payload.modalKind,
-                message: action.payload.message
+            switch(action.payload.modalKind) {
+                case null:
+                    return {
+                        ...state,
+                        modalKind: null,
+                        message: undefined
+                    }
+                default:
+                    return {
+                        ...state,
+                        modalKind: action.payload.modalKind,
+                        message: action.payload.message
+                    }
             }
         default:
             return state

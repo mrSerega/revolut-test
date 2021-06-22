@@ -10,6 +10,7 @@ export interface ExchangeResponse {
 }
 
 export interface RateResponse {
+    success: boolean,
     base: string,
     date: string,
     rates: {
@@ -106,17 +107,31 @@ export class MockServerApi<S, StateExt, A extends Action, Ext> {
 
         return Promise.all(pocketList.map(pocket => {
             const base = pocket.currency
-            const symbols = pocketList.filter(p => p.currency !== base).map(p=> p.currency).join(',')
-            const url = `https://api.exchangeratesapi.io/latest?base=${base}&symbols=${symbols}`
+            const symbols = pocketList.filter(p => p.currency !== base).map(p=> p.currency)
+            const apiKey = '353794eb8441729883ad16f41d6fdb11'
+            const url = `http://api.exchangeratesapi.io/latest?access_key=${apiKey}&base=${base}&symbols=${symbols.join(',')}`
 
             return new Promise(async (res, rej) => {
                 try {
                     const response = await fetch(url)
                     if (response.ok) {
                         const json: RateResponse = await response.json()
-                        res({
-                            [base]: {...json.rates, [base]: 1.0}
-                        })
+                        if (json.success) {
+                            res({
+                                [base]: {...json.rates, [base]: 1.0}
+                            })
+                        } else {
+                            // fallback
+                            const fallbackrates = {
+                                [base]: 1.0,
+                            }
+                            symbols.forEach(symbol => {
+                                fallbackrates[symbol] = 1.0
+                            })
+                            res({
+                                [base]: fallbackrates
+                            })
+                        }
                     } else {
                         rej(new Error(`MockServer. Unsuccessful answer: ${response} for request: ${url}`))
                     }
